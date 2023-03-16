@@ -16,9 +16,9 @@ function tester(a, b) {
 //bind
 
 Function.prototype.myBind = function (scope, ...args) {
-  scope.value = this;
+  scope._this = this;
   return function () {
-    return scope.value(...args);
+    return scope._this(...args);
   };
 };
 

@@ -1,7 +1,6 @@
 //polyfill for filter
 
 let arr = [2, 5, 8, 10, 24, 13, 15];
-
 // let newArr = arr.filter((ele, i, arr)=>{
 //   return ele % 2 === 0
 // })

@@ -7,12 +7,9 @@ const calcSum = (num) => {
   }
   return sum;
 };
-
 // console.log(calcSum(6))
-
 function memoize(fun) {
   let cache = {};
-
   return (n) => {
     if (cache[n]) {
       return `${cache[n]} from cache`;
@@ -23,7 +20,6 @@ function memoize(fun) {
     }
   };
 }
-
 let memo1 = memoize(calcSum);
 
 console.log(memo1(6));

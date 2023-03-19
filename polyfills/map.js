@@ -1,5 +1,7 @@
 // // polyfill for map
+
 let arr = [2, 5, 8, 10, 24, 13, 15];
+
 // let result = arr.map((ele, i, arr)=>{
 //     return ele*2
 // })

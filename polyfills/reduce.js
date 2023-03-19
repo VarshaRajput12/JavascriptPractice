@@ -14,7 +14,9 @@ Array.prototype.myReduce = function (callback, initialValue = null) {
   for (let i = 0; i < this.length; i++) {
     accumlator = callback(accumlator, this[i], i, this);
   }
+
   return accumlator;
+  
 };
 
 let sum = arr.myReduce((acc, pre) => {

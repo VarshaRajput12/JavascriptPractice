@@ -6,6 +6,8 @@ let obj = {
 function tester(a, b) {
   return `a: ${this.a} b: ${this.b} | other a: ${a} b: ${b}`;
 }
+
+
 // let bindObj = tester.bind(obj, 100, 200);
 // console.log(tester.call(obj, 50, 80));
 // console.log(tester.apply(obj, [50, 80]));
@@ -36,6 +38,8 @@ Function.prototype.myBind = function (scope, ...args) {
     return scope._this(...args);
   };
 };
+
+
 
 console.log(tester.myCall(obj, 50, 80));
 console.log(tester.myApply(obj, [50, 80]));

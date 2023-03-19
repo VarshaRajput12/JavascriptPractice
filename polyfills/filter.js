@@ -1,6 +1,7 @@
 //polyfill for filter
 
 let arr = [2, 5, 8, 10, 24, 13, 15];
+
 // let newArr = arr.filter((ele, i, arr)=>{
 //   return ele % 2 === 0
 // })
@@ -17,6 +18,7 @@ Array.prototype.myFilter = function (callback) {
 
   return newArr;
 };
+
 
 let newArr = arr.myFilter((ele, i, arr) => {
   return ele % 2 !== 0;

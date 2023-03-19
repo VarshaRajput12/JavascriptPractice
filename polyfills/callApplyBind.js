@@ -8,10 +8,10 @@ function tester(a, b) {
 }
 
 
-// let bindObj = tester.bind(obj, 100, 200);
-// console.log(tester.call(obj, 50, 80));
-// console.log(tester.apply(obj, [50, 80]));
-// console.log(bindObj());
+let bindObj = tester.bind(obj, 100, 200);
+console.log(tester.call(obj, 50, 80));
+console.log(tester.apply(obj, [50, 80]));
+console.log(bindObj());
 
 // polyfills;
 
@@ -28,7 +28,6 @@ Function.prototype.myApply = function (scope, args) {
   scope._this = this;
   return scope._this(...args);
 };
-
 
 //bind
 

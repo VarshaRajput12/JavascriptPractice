@@ -13,15 +13,6 @@ function tester(a, b) {
 
 // polyfills;
 
-//bind
-
-Function.prototype.myBind = function (scope, ...args) {
-  scope._this = this;
-  return function () {
-    return scope._this(...args);
-  };
-};
-
 //call
 
 Function.prototype.myCall = function (scope, ...args) {
@@ -36,7 +27,17 @@ Function.prototype.myApply = function (scope, args) {
   return scope._this(...args);
 };
 
-let bindObj2 = tester.myBind(obj, 100, 200);
+
+//bind
+
+Function.prototype.myBind = function (scope, ...args) {
+  scope._this = this;
+  return function () {
+    return scope._this(...args);
+  };
+};
+
 console.log(tester.myCall(obj, 50, 80));
 console.log(tester.myApply(obj, [50, 80]));
+let bindObj2 = tester.myBind(obj, 100, 200);
 console.log(bindObj2());

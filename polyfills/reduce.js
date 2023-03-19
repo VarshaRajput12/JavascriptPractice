@@ -1,5 +1,7 @@
 // reduce polyfill 
+
 let arr = [2, 2, 1, 5];
+
 // let sum = arr.reduce((acc,pre)=>{
 //     return acc + pre
 // },0)

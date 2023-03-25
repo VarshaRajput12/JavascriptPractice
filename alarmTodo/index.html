@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        text-align: center;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 2px solid black;
+      }
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 12px 20px;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .delete {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+      .delete:hover {
+        background-color: #c21807;
+      }
+      .update {
+        background-color: #ffc107;
+        color: black;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        margin-left: 8px;
+      }
+      .update:hover {
+        background-color: #ff8f00;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Todo App</h1>
+    <form>
+      <input type="text" id="todo-input" placeholder="Add a todo item..." />
+      <input type="submit" value="Add" />
+    </form>
+    <ul id="todo-list"></ul>
+
+    <script>
+      // Get the input field and add event listener for form submit
+      var todoInput = document.getElementById("todo-input");
+      var todoForm = document.querySelector("form");
+      todoForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        addTodoItem(todoInput.value);
+        todoInput.value = "";
+      });
+
+      // Get the todo list and add event listener for click on delete/update buttons
+      var todoList = document.getElementById("todo-list");
+      todoList.addEventListener("click", function (event) {
+        var target = event.target;
+        var parent = target.parentElement;
+        if (target.classList.contains("delete")) {
+          deleteTodoItem(parent);
+        } else if (target.classList.contains("update")) {
+          updateTodoItem(parent);
+        }
+      });
+
+      // Add a function to add a todo item to the list
+      function addTodoItem(todoText) {
+        var todoItem = document.createElement("li");
+        todoItem.innerText = todoText;
+        var deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.setAttribute("class", "delete");
+        var updateButton = document.createElement("button");
+        updateButton.innerText = "Update";
+        updateButton.setAttribute("class", "update");
+        todoItem.appendChild(deleteButton);
+        todoItem.appendChild(updateButton);
+        todoList.appendChild(todoItem);
+        // Store the todo item in local storage
+        localStorage.setItem(todoText, "");
+      }
+
+      // Add a function to update a todo item in the list and local storage
+      function updateTodoItem(todoItem) {
+        var todoText = todoItem.innerText;
+        var updateText = prompt("Enter new text for todo item", todoText);
+        if (updateText != null) {
+          todoItem.innerText = updateText;
+          // Update the todo item in local storage
+          localStorage.removeItem(todoText);
+          localStorage.setItem(updateText, "");
+        }
+      }
+
+      // Load the saved todo items from local storage on page load
+      function loadTodoItems() {
+        for (var i = 0; i < localStorage.length; i++) {
+          var todoText = localStorage.key(i);
+          if (todoText != "") {
+            addTodoItem(todoText);
+          }
+        }
+      }
+      loadTodoItems();
+
+      // Add an alarm feature
+      var alarmForm = document.createElement("form");
+      var alarmInput = document.createElement("input");
+      var alarmButton = document.createElement("button");
+      alarmInput.setAttribute("type", "time");
+      alarmButton.innerText = "Set Alarm";
+      alarmForm.appendChild(alarmInput);
+      alarmForm.appendChild(alarmButton);
+      document.body.appendChild(alarmForm);
+
+      alarmForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var alarmTime = alarmInput.value;
+        var now = new Date();
+        var alarmDate = new Date(now.toDateString() + " " + alarmTime);
+        if (alarmDate < now) {
+          alarmDate.setDate(alarmDate.getDate() + 1);
+        }
+        var timeDiff = alarmDate.getTime() - now.getTime();
+        setTimeout(function () {
+          alert("Alarm!");
+        }, timeDiff);
+      });
+    </script>
+  </body>
+</html>

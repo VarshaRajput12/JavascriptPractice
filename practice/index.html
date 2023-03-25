@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 500px;
+            background-color: #FFF;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: none;
+            background-color: #EEE;
+            border-radius: 5px;
+            width: 75%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: #FFF;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 23%;
+        }
+
+        button:hover {
+            background-color: #3E8E41;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        li {
+            padding: 10px;
+            background-color: #FFF;
+            border-bottom: 1px solid #EEE;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        button.delete {
+            background-color: #F44336;
+            color: #FFF;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+
+        button.delete:hover {
+            background-color: #D32F2F;
+        }
+
+        button.update {
+            background-color: #2196F3;
+            color: #FFF;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+
+        button.update:hover {
+            background-color: #1976D2;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Todo List</h1>
+    <div>
+        <input type="text" id="todoItem">
+        <button onclick="addTodo()">Add</button>
+    </div>
+    <ul id="todoList">
+    </ul>
+</div>
+
+<script>
+    var todoList = document.getElementById("todoList");
+    var todoItem = document.getElementById("todoItem");
+    var updateButton = document.getElementById("updateButton");
+
+    // Load the existing todo items from local storage
+    var storedTodos = JSON.parse(localStorage.getItem("todos"));
+    if (storedTodos) {
+        for (var i = 0; i < storedTodos.length; i++) {
+            addTodoItem(storedTodos[i]);
+        }
+    }
+
+    function addTodo() {
+        var todoText = todoItem.value.trim();
+        if (todoText.length > 0) {
+            addTodoItem(todoText);
+
+            // Save the new todo item to local storage
+            var todos = JSON.parse(localStorage.getItem("todos")) || [];
+            todos.push(todoText);
+            localStorage.setItem("todos", JSON.stringify(todos));
+
+            todoItem.value = "";
+        }
+    }
+
+        function addTodoItem(todoText) {
+        var li = document.createElement("li");
+        var span = document.createElement("span");
+        span.textContent = todoText;
+        li.appendChild(span);
+
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete";
+        deleteButton.addEventListener("click", function () {
+            deleteTodoItem(li, todoText);
+        });
+        li.appendChild(deleteButton);
+
+        var updateButton = document.createElement("button");
+        updateButton.textContent = "Update";
+        updateButton.className = "update";
+        updateButton.addEventListener("click", function () {
+            updateTodoItem(li, span, todoText);
+        });
+        li.appendChild(updateButton);
+
+        todoList.appendChild(li);
+    }
+
+    function deleteTodoItem(li, todoText) {
+        todoList.removeChild(li);
+
+        // Remove the deleted todo item from local storage
+        var todos = JSON.parse(localStorage.getItem("todos"));
+        todos.splice(todos.indexOf(todoText), 1);
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }
+
+    function updateTodoItem(li, span, todoText) {
+        var updatedTodoText = prompt("Update todo item:", todoText);
+        if (updatedTodoText !== null && updatedTodoText.trim().length > 0) {
+            span.textContent = updatedTodoText.trim();
+
+            // Update the updated todo item in local storage
+            var todos = JSON.parse(localStorage.getItem("todos"));
+            todos[todos.indexOf(todoText)] = updatedTodoText.trim();
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+    }
+</script>
+</body>
+</html>
+

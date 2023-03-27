@@ -14,9 +14,8 @@
 //   .then((response) => console.log(response))
 //   .catch((err) => console.error(err));
 
-
-let obj1 = {a: 10, b: 5, c: 3}
-let obj2 = {a: 15, b: 5, c: 3, e: 8}
+let obj1 = { a: 10, b: 5, c: 3 };
+let obj2 = { a: 15, b: 5, c: 3, e: 8 };
 
 // output = {b: 5, c: 3}
 
@@ -26,6 +25,6 @@ let obj2 = {a: 15, b: 5, c: 3, e: 8}
 // console.log(keysOfObj1)
 // console.log(keysOfObj2)
 
-for(let keys in obj1){
-  console.log(obj2[keys])
+for (let keys in obj1) {
+  console.log(obj2[keys]);
 }
